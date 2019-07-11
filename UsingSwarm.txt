@@ -1,0 +1,203 @@
+============
+Introduction
+============
+This document describes how the Antidote Web Shell application 
+can be started on a cluster of nodes using Docker swarm.
+
+A swarm cluster is composed of one manager node and one or more worker nodes.
+We will create a cluster of three nodes.
+The first node will be the manager node. It will host the web application and one Antidote container.
+The other two nodes will be worker nodes. Each will host one Antidote container.
+
+============
+IPs
+============
+We will refer to the IPs of the three nodes as follows:
+The first node:  <IP-1> (the manager node)
+The second node: <IP-2>
+The third node:  <IP-3>
+
+============
+Used Ports
+============
+- Web application port: 
+  3000 TCP (node 1)
+  
+- Antidote ports:
+  8087 TCP (node 1)
+  8088 TCP (node 2)
+  8089 TCP (node 3)
+
+- Swarm ports:
+  2377 TCP (nodes 1/2/3)
+  7946 TCP (nodes 1/2/3)
+  7946 UDP (nodes 1/2/3)
+  4789 UDP (nodes 1/2/3)
+  
+- Helful commands for managing ports on Ubuntu:
+  source: https://linuxconfig.org/how-to-open-allow-incoming-firewall-port-on-ubuntu-18-04-bionic-beaver-linux
+  
+  1) to list the open ports
+  sudo ufw status
+  
+  2) to list the open ports with numbering (number needed for closing a port)
+  sudo ufw status numbered
+  
+  3) to close a port given its number:
+  sudo ufw delete <number>
+
+  4) to open a TCP port, say 1234
+  sudo ufw allow from any to any port 1234 proto tcp
+  
+  5) to open a UDP port, say 1234
+  sudo ufw allow from any to any port 1234 proto udp
+
+- NOTE: if a service is not reachable even after opening its port, check if your networks blocks traffic from these ports.
+
+=======================
+Docker-Compose File
+=======================
+- Save the following in antidote-web-shell/docker/swarm-antidote-3dcs.yml
+- Note that we do not specifies the IP "127.0.01" in the ports configuration.
+  e.g. we changed ports from "127.0.0.1:8087:8087" to "8087:8087"
+- Note the placement constraint of each service.
+- Don't forget to replace <IP-1>, <IP-2>, <IP-3> with the actual IPs.
+- Note that 'links' attribe that is used in docker-antidote-3dcs.yml is not used anymore.
+  That is because docker links are deprecated, and also because swarm will 
+  handle linking the containers by default.
+
+-------start swarm-antidote-3dcs.yml--------
+version: "3.0"
+services:
+  antidote1:
+    image: antidotedb/antidote:0.2.0
+    ports:
+     - "8087:8087"
+    environment:
+      NODE_NAME: "antidote@antidote1"
+      SHORT_NAME: "true"
+    deploy:
+      placement:
+        constraints: [node.hostname == <IP-1>]
+        
+  antidote2:
+    image: antidotedb/antidote:0.2.0
+    ports:
+     - "8088:8087"
+    environment:
+      NODE_NAME: "antidote@antidote2"
+      SHORT_NAME: "true"
+    deploy:
+      placement:
+        constraints: [node.hostname == <IP-2>]
+              
+  antidote3:
+    image: antidotedb/antidote:0.2.0
+    ports:
+     - "8089:8087"
+    environment:
+      NODE_NAME: "antidote@antidote3"
+      SHORT_NAME: "true"
+    deploy:
+      placement:
+        constraints: [node.hostname == <IP-3>]
+
+  link:
+    image: erlang:19-slim
+    healthcheck:
+      test: ["CMD", "test", "-f", "/tmp/ready"]
+      interval: 3s
+      timeout: 1s
+      retries: 10
+    volumes:
+      - .:/code
+    command: '/code/connect_dcs.sh'
+    deploy:
+      placement:
+        constraints: [node.role == manager]    
+-------end swarm-antidote-3dcs.yml--------
+
+========================
+Configure the web shell application
+========================
+1) set the IP addresses of the nodes in antidote-web-shell/config.js
+
+-------start config.js--------
+const config = {
+    antidote: [
+        {
+            host: '<IP-1>',
+            port: 8087
+        },
+        {
+            host: '<IP-2>',
+            port: 8088
+        },
+        {
+            host: '<IP-3>',
+            port: 8089
+        }
+    ],
+    partitionCmd: './net_part.sh'
+};
+
+module.exports = config;
+-------end config.js--------
+
+===================
+Creating the cluster
+===================
+1) on the manager node, run this command:
+docker swarm init --advertise-addr <IP-1>
+
+2) the above command will print out a join command. 
+Copy this command as it is and run it at the other nodes to allow them to join the cluster.
+
+3) to see the list of cluster nodes, run this command on the manager node:
+docker node ls
+
+=======================
+Starting the containers
+=======================
+We start the containers as a service with name "antidote-service"
+
+1) on the manager node, run the following:
+docker stack deploy -c swarm-antidote-3dcs.yml antidote-service
+
+2) check that the containers have started correctly at the three nodes:
+docker ps
+
+========================
+Start the web shell application
+========================
+1) on the manager node:
+cd antidote-web-shell
+PORT=3000 make start-server
+
+2) a process named www will start and listen to port 3000
+TODO: how to detach!
+
+========================
+Stop the web shell application
+========================
+1) on the manager node, find the PID of the www, and kill it
+
+ps -ef | grep www
+kill -9 <PID>
+
+=======================
+Stoping the Containers
+=======================
+1) on the manager node, run the following:
+docker stack rm antidote-service
+
+======================
+Terminating the cluster
+======================
+1) on each node, run this command:
+docker swarm leave --force
+
+
+
+
+
