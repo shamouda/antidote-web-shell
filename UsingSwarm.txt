@@ -52,7 +52,7 @@ Used Ports
   5) to open a UDP port, say 1234
   sudo ufw allow from any to any port 1234 proto udp
 
-- NOTE: if a service is not reachable even after opening its port, check if your networks blocks traffic from these ports.
+- NOTE: if a service is not reachable even after opening its port, check if your network blocks traffic from these ports.
 
 =======================
 Docker-Compose File
