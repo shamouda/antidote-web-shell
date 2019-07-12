@@ -57,8 +57,8 @@ Used Ports
 =======================
 Docker-Compose File
 =======================
-- Save the following in antidote-web-shell/docker/swarm-antidote-3dcs.yml
-- Note that we do not specifies the IP "127.0.01" in the ports configuration.
+- We use the docker compose file located at: antidote-web-shell/docker/swarm-antidote-3dcs.yml
+- Note that we do not specify the IP "127.0.01" in the ports configuration.
   e.g. we changed ports from "127.0.0.1:8087:8087" to "8087:8087"
 - Note the placement constraint of each service.
 - Don't forget to replace <IP-1>, <IP-2>, <IP-3> with the actual IPs.
