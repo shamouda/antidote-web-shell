@@ -21,6 +21,8 @@ counter:
 const CMDS = ['set', 'help', 'get', 'add',
     'remove', 'count', 'inc', 'dec'];
 
+const LOCATIONS = ['Paris', 'Kaiserslautern', 'Kaiserslautern'];
+
 document.onkeydown = function (e) {
     // Ctrl+[1,2,..,9] to switch between terminals
     if (e.ctrlKey && (e.which >= 49 && e.which <= 57)) {
@@ -32,6 +34,7 @@ var terms = [];
 
 $(function () {
     for (i = 1; i <= NUM_TERMS; i++) {
+    	$('#label' + i).html('<b>' + LOCATIONS[i-1] + '</b>');
         // Initialize terminals
         terms.push(
             $('#term' + i).terminal(evalAtdCmd, {
