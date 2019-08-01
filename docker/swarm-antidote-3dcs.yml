@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   antidote1:
-    image: antidotedb/antidote:0.2.0
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8087:8087"
     environment:
@@ -12,7 +12,7 @@ services:
         constraints: [node.role == manager]
         
   antidote2:
-    image: antidotedb/antidote:0.2.0
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8088:8087"
     environment:
@@ -23,7 +23,7 @@ services:
         constraints: [node.role == manager]
               
   antidote3:
-    image: antidotedb/antidote:0.2.0
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8089:8087"
     environment:
@@ -34,7 +34,7 @@ services:
         constraints: [node.role == worker]
 
   link:
-    image: erlang:19-slim
+    image: erlang:21-slim
     healthcheck:
       test: ["CMD", "test", "-f", "/tmp/ready"]
       interval: 3s
