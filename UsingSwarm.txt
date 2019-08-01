@@ -61,7 +61,7 @@ Docker-Compose File
 - Note that we do not specify the IP "127.0.01" in the ports configuration.
   e.g. we changed ports from "127.0.0.1:8087:8087" to "8087:8087"
 - Note the placement constraint of each service.
-- Don't forget to replace <IP-1>, <IP-2>, <IP-3> with the actual IPs.
+- Don't forget to update the three 'node.hostname' entries with the actual docker host names (IPs do not work here).
 - Note that 'links' attribe that is used in docker-antidote-3dcs.yml is not used anymore.
   That is because docker links are deprecated, and also because swarm will 
   handle linking the containers by default.
@@ -78,7 +78,7 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == <IP-1>]
+        constraints: [node.hostname == <Docker hostname of IP-1>]
         
   antidote2:
     image: antidotedb/antidote:0.2.0
@@ -89,7 +89,7 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == <IP-2>]
+        constraints: [node.hostname == <Docker hostname of IP-2>]
               
   antidote3:
     image: antidotedb/antidote:0.2.0
@@ -100,7 +100,7 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == <IP-3>]
+        constraints: [node.hostname == <Docker hostname of IP-3>]
 
   link:
     image: erlang:19-slim
