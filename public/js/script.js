@@ -21,6 +21,7 @@ counter:
 const CMDS = ['set', 'help', 'get', 'add',
     'remove', 'count', 'inc', 'dec'];
 
+//FIXME: this should be read from config.js
 const LOCATIONS = ['Paris', 'Kaiserslautern', 'Kaiserslautern'];
 
 document.onkeydown = function (e) {
