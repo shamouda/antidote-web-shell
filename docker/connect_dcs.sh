@@ -1,6 +1,4 @@
-#!/bin/bash
-
-sleep 20
+#!/bin/bash -e
 
 cat > /tmp/connect.erl <<- EOF 
 #!/usr/bin/env escript
@@ -20,5 +18,3 @@ main(_Args) ->
 EOF
 
 escript /tmp/connect.erl
-touch /tmp/ready
-#while true; do sleep 20; done
