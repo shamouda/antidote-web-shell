@@ -48,6 +48,9 @@ for (let i in conf.antidote) {
 
 /* Static web page routing. */
 const staticRouter = express.Router();
+staticRouter.get('/perf', function (req, res, next) {
+    res.sendFile(viewPath + 'performance.html');
+});
 staticRouter.get('/', function (req, res, next) {
     res.sendFile(viewPath + 'index.html');
 });
