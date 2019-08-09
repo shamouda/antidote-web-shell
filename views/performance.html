@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>AntidoteDB Nightly Performance</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.3/css/jquery.terminal.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
+</head>
+
+
+<body>
+    <div class="container">
+        <h1>AntidoteDB Nightly Performance</h1>
+        <a href="/">Back to the web shell</a>
+        <br/>
+        
+    	<label class="plot_lbl">Read-Only Transactions: Throughput</label>
+       	<div id="throughput-ro"></div>
+       	<br/>
+       	<label class="plot_lbl">Read-Only Transactions: Latency</label>
+       	<div id="latency-ro"></div>
+     	<br/>
+     	<label class="plot_lbl">Write-Only Transactions: Throughput</label>
+        <div id="throughput-wo"></div>
+        <br/>
+        <label class="plot_lbl">Write-Only Transactions: Latency</label>
+        <div id="latency-wo"></div>
+		<br/>
+   		<label class="plot_lbl">Read-Write Transactions: Throughput</label>
+   		<div id="throughput-rw"></div>
+    	<br/>
+    	<label class="plot_lbl">Read-Write Transactions: Latency</label>
+    	<div id="latency-rw"></div>
+	</div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.1.0/dygraph.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/1.11.3/js/jquery.terminal.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+    <script src="/js/plot.js"></script>
+</body>
+
+</html>
