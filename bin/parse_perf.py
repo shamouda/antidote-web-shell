@@ -2,6 +2,9 @@ import sys
 import statistics
 from datetime import date
 
+## Program that parses the output of the Benchmarks repository ##
+## Usage: python parse_perf.py <input folder path> <output folder path> <transaction type>
+
 READ_ONLY = 1
 READ_WRITE = 2
 WRITE_ONLY = 3
@@ -42,11 +45,11 @@ if len(sys.argv) > 3:
         print('Processing read-write results ...')
     else:
         print('Error: wrong type value')
-        print('Usage: python stats.py <input folder path> <output folder path> <transaction type>')
+        print('Usage: python parse_perf.py <input folder path> <output folder path> <transaction type>')
         sys.exit()
 else:
     print('Error: missing parameters')
-    print('Usage: python stats.py <input folder path> <output folder path> <transaction type>')
+    print('Usage: python parse_perf.py <input folder path> <output folder path> <transaction type>')
     sys.exit()
 
 #### latency calculations ####
