@@ -11,11 +11,14 @@ WRITE_ONLY = 3
 
 today = date.today().strftime("%Y%m%d")
 
+#PWD
+dir_path = os.path.dirname(os.path.abspath(__file__))
+
 #input files
 in_path = ''
 in_summaryfile = ''
 in_latecyfile = ''
-out_path = ''
+out_path = os.path.join(dir_path, '../public/perf_data')
 out_throughputfile = ''
 out_latencyfile = ''
 
@@ -25,8 +28,7 @@ latencyrow=7
 
 if len(sys.argv) > 3:
     in_path = sys.argv[1]
-    out_path = sys.argv[2]
-    type = int(sys.argv[3])
+    type = int(sys.argv[2])
     in_summaryfile = in_path + '/summary.csv'
     if type == READ_ONLY:
         in_latecyfile = in_path + '/read-only-txn_latencies.csv'

@@ -10,12 +10,12 @@ src=$(pwd)
 cd $BENCH_HOME
 ./_build/default/bin/basho_bench examples/antidote_pb.config.wo
 cd $src
-python parse_perf.py $BENCH_HOME/tests/current ../public/perf_data 3
+python parse_perf.py $BENCH_HOME/tests/current 3
 
 #Read only transaction
 cd $BENCH_HOME
 echo "starting read-only transactions"
 ./_build/default/bin/basho_bench examples/antidote_pb.config.ro
 cd $src
-python parse_perf.py $BENCH_HOME/tests/current ../public/perf_data 1
+python parse_perf.py $BENCH_HOME/tests/current 1
 
