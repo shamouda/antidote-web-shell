@@ -27,6 +27,8 @@ out_latencyfile = ''
 #latencies after 1 minute of execution
 latencyrow=7
 
+print(sys.argv)
+
 if len(sys.argv) > 2:
     in_path = sys.argv[1]
     type = int(sys.argv[2])
@@ -48,11 +50,11 @@ if len(sys.argv) > 2:
         print('Processing read-write results ...')
     else:
         print('Error: wrong type value')
-        print('Usage: python parse_perf.py <input folder path> <output folder path> <transaction type>')
+        print('Usage: python parse_perf.py <input folder absolute path> <transaction type>')
         sys.exit()
 else:
     print('Error: missing parameters')
-    print('Usage: python parse_perf.py <input folder path> <output folder path> <transaction type>')
+    print('Usage: python parse_perf.py <input folder absolute path> <transaction type>')
     sys.exit()
 
 #### latency calculations ####
