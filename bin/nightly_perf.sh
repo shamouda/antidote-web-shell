@@ -4,18 +4,15 @@ then
     exit
 fi
 
-src=$(pwd)
+SRC=$(pwd)
 
 #Weite only transactions
-cd $BENCH_HOME
-./_build/default/bin/basho_bench examples/antidote_pb.config.wo
-cd $src
-python parse_perf.py $BENCH_HOME/tests/current 3
+$BENCH_HOME/_build/default/bin/basho_bench $BENCH_HOME/examples/antidote_pb.config.wo
+python $SRC/parse_perf.py $BENCH_HOME/tests/current 3
 
 #Read only transaction
 cd $BENCH_HOME
 echo "starting read-only transactions"
-./_build/default/bin/basho_bench examples/antidote_pb.config.ro
-cd $src
-python parse_perf.py $BENCH_HOME/tests/current 1
+$BENCH_HOME/_build/default/bin/basho_bench $BENCH_HOME/examples/antidote_pb.config.ro
+python $SRC/parse_perf.py $BENCH_HOME/tests/current 1
 
