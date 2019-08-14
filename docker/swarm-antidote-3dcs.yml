@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   antidote1:
-    image: antidote-fix
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8087:8087"
     environment:
@@ -9,10 +9,10 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == antidote ]
+        constraints: [node.hostname == antidote1 ]
         
   antidote2:
-    image: antidote-fix
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8088:8087"
     environment:
@@ -20,10 +20,10 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == softech003]
+        constraints: [node.hostname == antidote2]
               
   antidote3:
-    image: antidote-fix
+    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
     ports:
      - "8089:8087"
     environment:
@@ -31,7 +31,7 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.hostname == softech003]
+        constraints: [node.hostname == antidote3]
 
   link:
     image: erlang:21-slim
