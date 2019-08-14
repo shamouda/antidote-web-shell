@@ -1,3 +1,5 @@
+date
+
 if [ -z "$BENCH_HOME" ]
 then
     echo "Error: \$BENCH_HOME is empty, set it with the path of the Benchmarks repo"
