@@ -8,11 +8,11 @@ fi
 
 #Write only transactions
 echo "starting write-only transactions"
-$BENCH_HOME/_build/default/bin/basho_bench $BENCH_HOME/examples/antidote_pb.config.wo
+$BENCH_HOME/_build/default/bin/basho_bench antidote_pb.config.wo
 python parse_perf.py tests/current 3
 
 #Read only transaction
 echo "starting read-only transactions"
-$BENCH_HOME/_build/default/bin/basho_bench $BENCH_HOME/examples/antidote_pb.config.ro
+$BENCH_HOME/_build/default/bin/basho_bench antidote_pb.config.ro
 python parse_perf.py tests/current 1
 
