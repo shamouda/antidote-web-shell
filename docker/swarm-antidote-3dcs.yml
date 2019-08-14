@@ -1,7 +1,7 @@
 version: "3.0"
 services:
   antidote1:
-    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
+    image: antidote-fix
     ports:
      - "8087:8087"
     environment:
@@ -9,10 +9,10 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.hostname == antidote ]
         
   antidote2:
-    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
+    image: antidote-fix
     ports:
      - "8088:8087"
     environment:
@@ -20,10 +20,10 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.role == manager]
+        constraints: [node.hostname == softech003]
               
   antidote3:
-    image: itoumlilt/antidotedb:v0.2.0-alpine-iptables
+    image: antidote-fix
     ports:
      - "8089:8087"
     environment:
@@ -31,7 +31,7 @@ services:
       SHORT_NAME: "true"
     deploy:
       placement:
-        constraints: [node.role == worker]
+        constraints: [node.hostname == softech003]
 
   link:
     image: erlang:21-slim
@@ -42,4 +42,4 @@ services:
       placement:
         constraints: [node.role == manager]
       restart_policy:
-        condition: on-failure  
+        condition: on-failure    

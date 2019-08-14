@@ -1,15 +1,15 @@
 const config = {
     antidote: [
         {
-            host: 'localhost',
+            host: '132.227.104.27',
             port: 8087
         },
         {
-            host: 'localhost',
+            host: '131.246.92.122',
             port: 8088
         },
         {
-            host: 'localhost',
+            host: '131.246.92.122',
             port: 8089
         }
     ],
