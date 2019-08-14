@@ -27,7 +27,7 @@ out_latencyfile = ''
 #latencies after 1 minute of execution
 latencyrow=7
 
-if len(sys.argv) > 3:
+if len(sys.argv) > 2:
     in_path = sys.argv[1]
     type = int(sys.argv[2])
     in_summaryfile = in_path + '/summary.csv'
